@@ -16,7 +16,7 @@ def login():
         <input type="text" name="username"><br>
         <label>Contraseña:</label><br>
         <input type="password" name="password"><br><br>
-        <input type="submit" value="Ingresar de forma insegura">
+        <input type="submit" value="Ingresar">
     </form>
     """
 
