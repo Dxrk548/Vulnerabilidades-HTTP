@@ -1,16 +1,20 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
+from flask_wtf.csrf import CSRFProtect
 
 db = SQLAlchemy()
+csrf = CSRFProtect()
 
 def create_app():
     app = Flask(__name__, template_folder='../templates')
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laboratorio.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = 'token_secreto_para_sesiones_seguras_12345'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'clave')
 
     db.init_app(app)
+    csrf.init_app(app)
 
     from .main_routes import main_bp
     from .auth_routes import auth_bp
