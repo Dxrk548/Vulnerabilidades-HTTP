@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-4 shadow-sm rounded bg-white border-start border-primary border-4">
+            <h2 class="fw-bold text-dark">Bienvenido {{ username }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card p-4">
+            <h5 class="fw-bold mb-3 text-primary">Crear Nueva Nota</h5>
+            <form action="{{ url_for('auth.dashboard') }}" method="POST" autocomplete="off">
+                <div class="mb-3">
+                    <label class="form-label">Título del asunto</label>
+                    <input type="text" name="title" class="form-control" placeholder="Ej. Pendientes del proyecto" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contenido / Descripción</label>
+                    <textarea name="content" class="form-control" rows="4" placeholder="Escribe lo que quieras guardar aquí..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 fw-bold">Guardar en mi Cuenta</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h5 class="fw-bold mb-3 text-secondary">Mis Registros Guardados</h5>
+        
+        {% if notes %}
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                {% for note in notes %}
+                <div class="col">
+                    <div class="card h-100 bg-white border">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold text-dark">{{ note.title }}</h6>
+                            <p class="card-text text-muted" style="font-size: 0.9rem;">{{ note.content }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 text-end">
+                            <small class="text-muted" style="font-size: 0.75rem;">
+                                {{ note.created_at.strftime('%d/%m/%Y %H:%M') }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-light text-center border p-4">
+                <p class="mb-2 text-muted">Aún no tienes elementos guardados en tu espacio.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
